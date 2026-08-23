@@ -10,6 +10,7 @@ def solve(N, X):
 
 def main():
     import sys
+
     tokens = iter(sys.stdin.read().split())
     N = int(next(tokens))
     X = [None for _ in range(N)]
@@ -20,5 +21,5 @@ def main():
     print(a)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

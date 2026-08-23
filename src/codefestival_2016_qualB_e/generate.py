@@ -9,13 +9,17 @@ def main():
     a = random.randint(1, 1000)  # TODO: edit here
     b = [None for _ in range(a)]
     for i in range(a):
-        b[i] = ''.join([random.choice('abcde') for _ in range(random.randint(1, 100))])  # TODO: edit here
+        b[i] = "".join(
+            [random.choice("abcde") for _ in range(random.randint(1, 100))]
+        )  # TODO: edit here
     c = random.randint(1, 1000)  # TODO: edit here
     d = [None for _ in range(c)]
     e = [None for _ in range(c)]
     for i in range(c):
         d[i] = random.randint(1, 10**9)  # TODO: edit here
-        e[i] = ''.join([random.choice('abcde') for _ in range(random.randint(1, 100))])  # TODO: edit here
+        e[i] = "".join(
+            [random.choice("abcde") for _ in range(random.randint(1, 100))]
+        )  # TODO: edit here
     print(a)
     for i in range(a):
         print(b[i])

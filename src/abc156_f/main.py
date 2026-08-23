@@ -10,6 +10,7 @@ def solve(k, q, d, n, x, m):
 
 def main():
     import sys
+
     tokens = iter(sys.stdin.read().split())
     k = int(next(tokens))
     q = int(next(tokens))
@@ -29,5 +30,5 @@ def main():
         print(a[i])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

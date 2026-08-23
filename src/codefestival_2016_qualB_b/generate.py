@@ -9,7 +9,9 @@ def main():
     N = random.randint(1, 10**9)  # TODO: edit here
     A = random.randint(1, 10**9)  # TODO: edit here
     B = random.randint(1, 10**9)  # TODO: edit here
-    S = ''.join([random.choice('abcde') for _ in range(random.randint(1, 100))])  # TODO: edit here
+    S = "".join(
+        [random.choice("abcde") for _ in range(random.randint(1, 100))]
+    )  # TODO: edit here
     print(N, A, B)
     print(S)
 

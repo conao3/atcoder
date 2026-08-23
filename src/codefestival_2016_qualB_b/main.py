@@ -2,8 +2,8 @@
 
 from typing import *
 
-YES = 'Yes'
-NO = 'No'
+YES = "Yes"
+NO = "No"
 
 
 # def solve(N: int, A: int, B: int, S: str) -> List[str]:
@@ -19,5 +19,5 @@ def main():
         print(ans[i])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -16,5 +16,5 @@ def main():
     print(ans)  # TODO: edit here
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

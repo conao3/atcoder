@@ -15,12 +15,12 @@ def main():
         for j in range(i):
             d[i][j] = random.randint(1, 10)  # TODO: edit here
     e = random.randint(1, 10)  # TODO: edit here
-    print(a, end=' ')
-    print(b, end=' ')
+    print(a, end=" ")
+    print(b, end=" ")
     for i in range(a):
         print(c[i])
         for j in range(i):
-            print(d[i][j], end=' ')
+            print(d[i][j], end=" ")
     print(e)
 
 

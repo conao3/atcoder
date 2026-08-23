@@ -10,6 +10,7 @@ def solve(a, b, c, d, e):
 
 def main():
     import sys
+
     tokens = iter(sys.stdin.read().split())
     a = int(next(tokens))
     b = [None for _ in range(a)]
@@ -27,5 +28,5 @@ def main():
         print(f[i])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
