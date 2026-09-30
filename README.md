@@ -37,6 +37,7 @@ DP practice lives under `src/dp/`.
 | ABC208 B | `src/dp/abc208_b` |
 | ABC153 D | `src/dp/abc153_d` |
 | ABC263 B | `src/dp/abc263_b` |
+| ABC272 B | `src/dp/abc272_b` |
 
 ## Requirements
 
