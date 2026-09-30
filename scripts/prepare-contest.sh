@@ -78,7 +78,16 @@ print("\n".join(seen))
 fi
 
 echo "contest ${contest}: ${#problems[@]} problems -> ${folder}/"
-nix shell nixpkgs#online-judge-tools --command bash -s -- "$root" "$contest" "$folder" "${problems[@]}" << 'EOF'
+shim=$(mktemp -d)
+trap 'rm -rf "$shim"' EXIT
+cat > "${shim}/pkg_resources.py" << 'PY'
+import importlib.resources as resources
+
+def resource_filename(package, resource):
+    return str(resources.files(package).joinpath(resource))
+PY
+nix shell nixpkgs#online-judge-tools nixpkgs#online-judge-template-generator --command \
+  env PYTHONPATH="$shim" bash -s -- "$root" "$contest" "$folder" "${problems[@]}" << 'EOF'
 set -euo pipefail
 root=$1
 contest=$2
@@ -90,15 +99,22 @@ for problem_id in "$@"; do
     continue
   fi
   dir="${root}/${folder}/${problem_id}"
+  mkdir -p "$dir"
   if [[ -e "${dir}/test/sample-1.in" ]]; then
     echo "skip ${problem_id} (${folder}/${problem_id}/test/sample-1.in already exists)"
-    continue
+  else
+    echo "download ${problem_id} -> ${folder}/${problem_id}/test"
+    (
+      cd "$dir"
+      oj download "https://atcoder.jp/contests/${contest}/tasks/${problem_id}"
+    )
   fi
-  mkdir -p "$dir"
-  echo "download ${problem_id} -> ${folder}/${problem_id}/test"
-  (
-    cd "$dir"
-    oj download "https://atcoder.jp/contests/${contest}/tasks/${problem_id}"
-  )
+  if [[ ! -e "${dir}/main.py" ]]; then
+    echo "template ${problem_id} -> ${folder}/${problem_id}/main.py"
+    (
+      cd "$dir"
+      oj-template -t main.py "https://atcoder.jp/contests/${contest}/tasks/${problem_id}" > main.py
+    )
+  fi
 done
 EOF
