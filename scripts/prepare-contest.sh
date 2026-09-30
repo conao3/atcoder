@@ -1,24 +1,67 @@
 #!/usr/bin/env bash
-# Download every problem in an AtCoder contest into src/{problem_id}/test/.
-# Usage: scripts/prepare-contest.sh abc208
+# Download AtCoder samples.
+# Usage:
+#   scripts/prepare-contest.sh abc208
+#   scripts/prepare-contest.sh https://atcoder.jp/contests/abc153/tasks/abc153_d --folder dp
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
+usage() {
   echo "usage: scripts/prepare-contest.sh abc208" >&2
+  echo "       scripts/prepare-contest.sh https://atcoder.jp/contests/abc153/tasks/abc153_d --folder dp" >&2
+  exit 2
+}
+
+folder=src
+target=
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --folder)
+      [[ $# -ge 2 ]] || usage
+      folder=$2
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      [[ -z "$target" ]] || usage
+      target=$1
+      shift
+      ;;
+  esac
+done
+[[ -n "$target" ]] || usage
+if [[ ! "$folder" =~ ^[A-Za-z0-9_-]+$ ]]; then
+  echo "folder must be a single directory name" >&2
+  exit 2
+fi
+if [[ "$folder" != src ]]; then
+  folder="src/${folder}"
+fi
+
+target=${target%%\?*}
+target=${target%/}
+contest=
+only=
+if [[ "$target" =~ /contests/([^/]+)/tasks/([^/]+)$ ]]; then
+  contest=${BASH_REMATCH[1]}
+  only=${BASH_REMATCH[2]}
+elif [[ "$target" =~ /contests/([^/]+)(/tasks)?$ ]]; then
+  contest=${BASH_REMATCH[1]}
+elif [[ "$target" != *://* ]]; then
+  contest=$target
+else
+  echo "unrecognized target: ${target}" >&2
   exit 2
 fi
 
-contest=$1
-if [[ $contest == http://* || $contest == https://* ]]; then
-  contest=${contest%/}
-  contest=${contest##*/}
-fi
-
 root=$(cd "$(dirname "$0")/.." && pwd)
-tasks_url="https://atcoder.jp/contests/${contest}/tasks"
-html=$(curl -fsSL -A 'online-judge-tools' "$tasks_url")
-
-mapfile -t problems < <(printf '%s' "$html" | python3 -c '
+if [[ -n "$only" ]]; then
+  problems=("$only")
+else
+  tasks_url="https://atcoder.jp/contests/${contest}/tasks"
+  html=$(curl -fsSL -A 'online-judge-tools' "$tasks_url")
+  mapfile -t problems < <(printf '%s' "$html" | python3 -c '
 import re
 import sys
 
@@ -32,25 +75,27 @@ if not seen:
     sys.exit(1)
 print("\n".join(seen))
 ' "$contest")
+fi
 
-echo "contest ${contest}: ${#problems[@]} problems"
-nix shell nixpkgs#online-judge-tools --command bash -s -- "$root" "$contest" "${problems[@]}" << 'EOF'
+echo "contest ${contest}: ${#problems[@]} problems -> ${folder}/"
+nix shell nixpkgs#online-judge-tools --command bash -s -- "$root" "$contest" "$folder" "${problems[@]}" << 'EOF'
 set -euo pipefail
 root=$1
 contest=$2
-shift 2
+folder=$3
+shift 3
 for problem_id in "$@"; do
-  if [[ -e "${root}/src/dp/${problem_id}/test/sample-1.in" ]]; then
+  if [[ "$folder" == src && -e "${root}/src/dp/${problem_id}/test/sample-1.in" ]]; then
     echo "skip ${problem_id} (src/dp/${problem_id}/test/sample-1.in already exists)"
     continue
   fi
-  dir="${root}/src/${problem_id}"
-  mkdir -p "$dir"
+  dir="${root}/${folder}/${problem_id}"
   if [[ -e "${dir}/test/sample-1.in" ]]; then
-    echo "skip ${problem_id} (src/${problem_id}/test/sample-1.in already exists)"
+    echo "skip ${problem_id} (${folder}/${problem_id}/test/sample-1.in already exists)"
     continue
   fi
-  echo "download ${problem_id} -> src/${problem_id}/test"
+  mkdir -p "$dir"
+  echo "download ${problem_id} -> ${folder}/${problem_id}/test"
   (
     cd "$dir"
     oj download "https://atcoder.jp/contests/${contest}/tasks/${problem_id}"

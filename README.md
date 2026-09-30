@@ -35,6 +35,7 @@ DP practice lives under `src/dp/`.
 | Problem | Path |
 |---|---|
 | ABC208 B | `src/dp/abc208_b` |
+| ABC153 D | `src/dp/abc153_d` |
 
 ## Requirements
 
@@ -80,7 +81,10 @@ To download every problem in a contest, pass the contest id. The script reads th
 
 ```bash
 scripts/prepare-contest.sh abc208
+scripts/prepare-contest.sh https://atcoder.jp/contests/abc153/tasks/abc153_d --folder dp
 ```
+
+A contest id or a contest URL downloads every task into `src/{problem_id}/`. A task URL downloads that task only. `--folder dp` puts the directory under `src/dp/` instead, so the command above creates `src/dp/abc153_d/`.
 
 Upstream `oj-prepare` is the command that does this in one step. The current nixpkgs build does not start, because `pkg_resources` is gone, and its tasks-page parser does not accept the memory unit `MiB`. The script lists the task ids and calls `oj download` for each one.
 
