@@ -4,7 +4,13 @@
 
 # def solve(N: int, P: List[int]) -> int:
 def solve(N, P):
-    pass  # TODO: edit here
+    dp = [-1 for _ in range(N)]
+    dp[0] = 0
+    for i in range(1, N):
+        p = P[i - 1]
+        dp[i] = dp[p - 1] + 1
+
+    return dp[N - 1]
 
 def main():
     import sys
