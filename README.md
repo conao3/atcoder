@@ -11,6 +11,10 @@ src/
     main.py        # Python solution
     generate.py    # Test case generator
     test/          # Sample test cases
+  dp/
+    {contest}_{problem}/
+      main.py      # DP practice
+      test/
 ```
 
 ## Contests
@@ -20,9 +24,17 @@ src/
 | ABC121 | A, B, C, D |
 | ABC139 | A, B, C, D, E, F |
 | ABC156 | A, B, C, D, E, F |
-| ABC208 | A, B, C, D, E, F |
+| ABC208 | A, C, D, E, F |
 | Code Festival 2016 Qual B | A, B, C, D, E |
 | Sumitrust Bank Programming Contest 2019 | A, B, C, D, E, F |
+
+## DP
+
+DP practice lives under `src/dp/`.
+
+| Problem | Path |
+|---|---|
+| ABC208 B | `src/dp/abc208_b` |
 
 ## Requirements
 
@@ -64,7 +76,7 @@ cd src/abc121_a
 python3 main.py < test/sample-1.in
 ```
 
-To download every problem in a contest, pass the contest id. The script reads the tasks page, creates `src/abc208_a/`, `src/abc208_b/`, and the rest, and saves samples under each `test/`. A problem whose `test/sample-1.in` is already present is skipped, so running the script again continues with the remaining problems.
+To download every problem in a contest, pass the contest id. The script reads the tasks page and, for each task not already saved, creates `src/{problem_id}/` and saves samples under `test/`. A problem whose `test/sample-1.in` is already present under `src/{problem_id}/` or `src/dp/{problem_id}/` is skipped, so running the script again continues with the remaining problems.
 
 ```bash
 scripts/prepare-contest.sh abc208
@@ -75,9 +87,9 @@ Upstream `oj-prepare` is the command that does this in one step. The current nix
 To download a single problem, create the directory and run `oj download` there. It writes `test/sample-N.in` and `test/sample-N.out`.
 
 ```bash
-mkdir -p src/abc208_b
-cd src/abc208_b
-nix run nixpkgs#online-judge-tools -- download https://atcoder.jp/contests/abc208/tasks/abc208_b
+mkdir -p src/abc208_a
+cd src/abc208_a
+nix run nixpkgs#online-judge-tools -- download https://atcoder.jp/contests/abc208/tasks/abc208_a
 ```
 
 To test a Python solution against every sample in `test/`, stay in that directory and run:

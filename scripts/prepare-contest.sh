@@ -40,6 +40,10 @@ root=$1
 contest=$2
 shift 2
 for problem_id in "$@"; do
+  if [[ -e "${root}/src/dp/${problem_id}/test/sample-1.in" ]]; then
+    echo "skip ${problem_id} (src/dp/${problem_id}/test/sample-1.in already exists)"
+    continue
+  fi
   dir="${root}/src/${problem_id}"
   mkdir -p "$dir"
   if [[ -e "${dir}/test/sample-1.in" ]]; then

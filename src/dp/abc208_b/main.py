@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
 from typing import *
+import math
 
 
 # def solve(N: int) -> int:
 def solve(N):
-    pass
+    coins = 0
+    for i in reversed(range(1, 11)):
+        coin = math.factorial(i)
+        take = N // coin
+        coins += take
+        N -= coin * take
 
+    return coins
 
 def main():
     N = int(input())
