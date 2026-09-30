@@ -17,7 +17,6 @@
         hook.register_filter_command(["yapf", "--style", format_config], data=data)
 %>\
 #!/usr/bin/env python3
-# from typing import *
 
 ${python.declare_constants(data)}
 

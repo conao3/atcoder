@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
-# from typing import *
-
-
 
 # def solve(H: int) -> int:
 def solve(H):
-    pass  # TODO: edit here
+    chain = []
+    h = H
+    while h:
+        chain.append(h)
+        h //= 2
+
+    dp = {}
+    for h in reversed(chain):
+        if h == 1:
+            dp[h] = 1
+        else:
+            dp[h] = 1 + 2 * dp[h // 2]
+
+    return dp[H]
 
 def main():
     H = int(input())
