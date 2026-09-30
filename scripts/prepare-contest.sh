@@ -113,7 +113,7 @@ for problem_id in "$@"; do
     echo "template ${problem_id} -> ${folder}/${problem_id}/main.py"
     (
       cd "$dir"
-      oj-template -t main.py "https://atcoder.jp/contests/${contest}/tasks/${problem_id}" > main.py
+      oj-template -t "${root}/scripts/template/main.py" "https://atcoder.jp/contests/${contest}/tasks/${problem_id}" > main.py
     )
   fi
 done
