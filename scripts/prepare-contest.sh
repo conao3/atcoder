@@ -42,6 +42,10 @@ shift 2
 for problem_id in "$@"; do
   dir="${root}/src/${problem_id}"
   mkdir -p "$dir"
+  if [[ -e "${dir}/test/sample-1.in" ]]; then
+    echo "skip ${problem_id} (src/${problem_id}/test/sample-1.in already exists)"
+    continue
+  fi
   echo "download ${problem_id} -> src/${problem_id}/test"
   (
     cd "$dir"

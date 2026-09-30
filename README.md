@@ -20,7 +20,7 @@ src/
 | ABC121 | A, B, C, D |
 | ABC139 | A, B, C, D, E, F |
 | ABC156 | A, B, C, D, E, F |
-| ABC208 | B |
+| ABC208 | A, B, C, D, E, F |
 | Code Festival 2016 Qual B | A, B, C, D, E |
 | Sumitrust Bank Programming Contest 2019 | A, B, C, D, E, F |
 
@@ -46,7 +46,7 @@ cd src/abc121_a
 python3 main.py < test/sample-1.in
 ```
 
-To download every problem in a contest, pass the contest id. The script reads the tasks page, creates `src/abc208_a/`, `src/abc208_b/`, and the rest, and saves samples under each `test/`.
+To download every problem in a contest, pass the contest id. The script reads the tasks page, creates `src/abc208_a/`, `src/abc208_b/`, and the rest, and saves samples under each `test/`. A problem whose `test/sample-1.in` is already present is skipped, so running the script again continues with the remaining problems.
 
 ```bash
 scripts/prepare-contest.sh abc208
