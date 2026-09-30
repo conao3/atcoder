@@ -46,7 +46,15 @@ cd src/abc121_a
 python3 main.py < test/sample-1.in
 ```
 
-To download sample cases, use online-judge-tools (`oj download`). It writes `test/sample-N.in` and `test/sample-N.out` in the current directory. Create the problem directory first, then run the command there. Replace the directory and the task URL for another problem.
+To download every problem in a contest, pass the contest id. The script reads the tasks page, creates `src/abc208_a/`, `src/abc208_b/`, and the rest, and saves samples under each `test/`.
+
+```bash
+scripts/prepare-contest.sh abc208
+```
+
+Upstream `oj-prepare` is the command that does this in one step. The current nixpkgs build does not start, because `pkg_resources` is gone, and its tasks-page parser does not accept the memory unit `MiB`. The script lists the task ids and calls `oj download` for each one.
+
+To download a single problem, create the directory and run `oj download` there. It writes `test/sample-N.in` and `test/sample-N.out`.
 
 ```bash
 mkdir -p src/abc208_b
