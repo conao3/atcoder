@@ -29,6 +29,24 @@ src/
 - C++17 or later
 - Python 3.6 or later
 
+## Complexity
+
+AtCoder's Python course says the judge runs about 10^8 to 10^9 operations per second ([EX19](https://atcoder.jp/contests/apg4bPython/tasks/APG4bPython_cd)). That figure is the C++ scale. For C++ and a 1 second limit, プログラミングコンテストチャレンジブック gives 10^7 iterations as likely to pass, and 10^8 as passing only when each step is very simple.
+
+With a 2 second limit read as about 10^8 simple steps, the usual match between the constraint and the algorithm is:
+
+| Maximum N | Order that fits |
+|---|---|
+| 10^2 | O(N^3) |
+| 10^3 to 10^4 | O(N^2) |
+| 10^5 to 10^6 | O(N log N) |
+| 10^7 to 10^8 | O(N) |
+| 10^9 and above | O(log N) or O(1) |
+
+PyPy on AtCoder is about one digit tighter. A 2021 measurement with a 2 second limit ran a loop of 10^7 assignments in 487 ms, and a loop of 10^8 timed out ([RIT Tech Blog](https://rit-inc.hatenablog.com/entry/2021/12/13/180125)). Treat 10^7 as the PyPy budget. The same course notes that a program which passes in PyPy can still time out in CPython.
+
+ABC208 B has a 2 second limit and N ≤ 10^7. A DP that tries every coin type at every amount is about 10 kinds × 10^7 = 10^8 updates, the size that timed out above. The greedy pass is 10 divisions.
+
 ## Usage
 
 To compile and run a C++ solution:
