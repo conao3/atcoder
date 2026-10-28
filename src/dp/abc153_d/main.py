@@ -17,10 +17,12 @@ def solve(H):
 
     return dp[H]
 
+
 def main():
     H = int(input())
     a = solve(H)
     print(a)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
