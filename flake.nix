@@ -29,7 +29,7 @@
           overlay =
             final: prev:
             let
-              python = prev.python313;
+              python = prev.python315;
               uv = prev.uv;
             in
             {
@@ -53,6 +53,7 @@
             programs.nixfmt.enable = true;
             programs.ruff-check.enable = true;
             programs.ruff-format.enable = true;
+            settings.excludes = [ "scripts/template/main.py" ];
           };
         };
     };
