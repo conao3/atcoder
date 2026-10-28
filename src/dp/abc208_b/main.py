@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from typing import *
 import math
+from typing import *
 
 
 # def solve(N: int) -> int:
@@ -14,6 +14,7 @@ def solve(N):
         N -= coin * take
 
     return coins
+
 
 def main():
     N = int(input())

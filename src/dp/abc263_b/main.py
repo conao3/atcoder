@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 
-
 # def solve(N: int, P: List[int]) -> int:
 def solve(N, P):
     dp = [-1 for _ in range(N)]
@@ -12,8 +11,10 @@ def solve(N, P):
 
     return dp[N - 1]
 
+
 def main():
     import sys
+
     tokens = iter(sys.stdin.read().split())
     N = int(next(tokens))
     P = [None for _ in range(N - 1)]
@@ -23,5 +24,6 @@ def main():
     a = solve(N, P)
     print(a)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
