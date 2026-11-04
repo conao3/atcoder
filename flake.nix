@@ -22,28 +22,15 @@
       perSystem =
         {
           pkgs,
-          system,
           ...
         }:
         let
-          overlay =
-            final: prev:
-            let
-              python = prev.python315;
-              uv = prev.uv;
-            in
-            {
-              inherit python uv;
-            };
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = [ overlay ];
-          };
+          python = pkgs.python315;
         in
         {
           devShells.default = pkgs.mkShell {
             packages = [
-              pkgs.python
+              python
               pkgs.uv
             ];
           };
