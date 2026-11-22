@@ -1,16 +1,6 @@
 import sys
-from collections.abc import Callable
-from typing import Literal
 
 from main import KthLargest
-
-
-def trap[R](f: Callable[[], R]) -> R | Literal[False]:
-    try:
-        return f()
-    except Exception:
-        return False
-
 
 for names_line in sys.stdin:
     args_line = next(sys.stdin, None)
